@@ -1,98 +1,96 @@
-// Ryan Ulep
-// Michael Pare
+#ifndef __COMPOSITE_CLASS__
+#define __COMPOSITE_CLASS__
 
-#ifndef BASE_H
-#define BASE_H
 #include <iostream>
+#include <sstream>
+#include <math.h>
+#include <string>
 
 using namespace std;
 
-// Base
+// forward declare to avoid circular dependencies
+class Iterator;
 
+//Abstract Base Class
 class Base {
     public:
-	/* Constructors */
-	Base () { };
+        Base(){};
 
-	/* Pure Virtual Functions */
-	virtual double evaluate() = 0;
+        //virtual
+        virtual double evaluate() = 0;
 };
 
-// Leafs
+//Leaf Class
+class Op: public Base {
+    private:
+        double value;
 
-class Op : public Base {
-    protected:
-	    double num;
     public:
-	    Op() : num(0) { }
-	    Op(double number) : num(number) { }
-	    double evaluate() {
-	        return num;
-    	}
+        Op() : Base(), value(0){};
+        Op(double val) : Base(), value(val){};
+        double evaluate() { 
+           return this->value; 
+        };
 };
 
-class singleOp : public Op {
+//Composite Base Classes
+class Operator: public Base {
     protected:
-	    Base *singleChild;
+        Base* left, *right;
     public:
-    	singleOp() : singleChild(0) { }
-    	singleOp(Base *single) : singleChild(single) { }
+        Operator() : Base(){ };
+        Operator(Base* l, Base* r) : left(l), right(r){  };
+
+        Base* get_left() { return left; };
+        Base* get_right() { return right; };
+        virtual double evaluate() = 0;	//Note: this is implicit in the inheritance, but can also be made explicit
 };
 
-class doubleOp : public Op {
+class UnaryOperator: public Base {
     protected:
-    	Base *left;
-    	Base *right;
+        Base* child;
     public:
-    	doubleOp() : left(0), right(0) { }
-	    doubleOp(Base *l, Base *r) : left(l), right(r) { }
+        UnaryOperator() : Base(){};
+        UnaryOperator(Base* c) : child(c) { };
+        virtual double evaluate() = 0;	//Note: this is implicit in the inheritance, but can also be made explicit
 };
 
-// Composite
-
-class Add : public doubleOp {
-    public:   
-            Add() : doubleOp() { } 
-            Add(Base *l, Base *r) : doubleOp(l, r)	{ }
-            double evaluate() {
-                return left->evaluate() + right->evaluate();
-            }
-};
-
-class Sub : public doubleOp {
-    public:   
-        Sub() : doubleOp() { } 
-        Sub(Base *l, Base *r) : doubleOp(l, r)	{ }
+//Composite Classes
+class Add: public Operator {
+    public:
+        Add() : Operator() { };
+        Add(Base* left, Base* right) : Operator(left,right) { };
         double evaluate() {
-            return left->evaluate() - right->evaluate();
+            return this->left->evaluate() + this->right->evaluate(); 
+        };
+};
+
+class Sub: public Operator {
+    public:
+        Sub() : Operator() { };
+        Sub(Base* left, Base* right) : Operator(left,right) {  };
+        double evaluate() {
+            //cout<<"in sub evaluation";
+            return this->left->evaluate() - this->right->evaluate(); 
         }
 };
 
-class Mult : public doubleOp {
+class Mult: public Operator {
     public:
-    	Mult() : doubleOp() { }
-    	Mult(Base *l, Base *r) : doubleOp(l, r) { }
-    	double evaluate() {
-    	    return left->evaluate() * right->evaluate();
-    	}
+        Mult() : Operator() { };
+        Mult(Base* left, Base* right) : Operator(left,right) { };
+        double evaluate() {
+            return this->left->evaluate() * this->right->evaluate(); 
+        };
 };
 
-class Div : public doubleOp {
-    public:   
-        Div() : doubleOp() { } 
-        Div(Base *l, Base *r) : doubleOp(l, r)	{ }
-        double evaluate() {
-            return left->evaluate() / right->evaluate();
-        }
-};
-
-class Sqr : public singleOp {
+class Sqr: public UnaryOperator {
     public:
-        Sqr() : singleOp() { } 
-        Sqr(Base *single) : singleOp(single) { }
+        Sqr() : UnaryOperator() { };
+        Sqr(Base* child) : UnaryOperator(child) { };
         double evaluate() {
-            return singleChild->evaluate() * singleChild->evaluate();
-        }
+            return pow(this->child->evaluate(), 2);
+        };
 };
 
 #endif

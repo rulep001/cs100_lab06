@@ -1,7 +1,7 @@
 #ifndef __COMMAND_CLASS__
 #define __COMMAND_CLASS__
 
-#include "composite.h"
+#include "Base.h"
 
 class Command {
 	protected:
@@ -55,9 +55,8 @@ class MultCommand : public Command {
 class SqrCommand : public Command {
 	public:
 		SqrCommand() : Command() {}
-		SqrCommand(Command* c, int i) {
-			Base* b = new Op(i);
-			root = new Sqr(c->get_root(), b);
+		SqrCommand(Command* c) {
+			root = new Sqr(c->get_root());
 		}
 };
 

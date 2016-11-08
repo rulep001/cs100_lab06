@@ -25,7 +25,7 @@ class Menu {
 				cout << '0' << endl;
 			}
 												
-			cout << history.at(history_index)->evaluate() << endl;
+			cout << history.at(history_index)->execute() << endl;
 		};
 		bool initialized() {
 			//Return true if the history has been primed with a single op instruciton
@@ -40,7 +40,7 @@ class Menu {
 		void add_command(Command* cmd) {
 			
 			//Adds a command to history in the appropriate posiiton (based on history_index)
-			if(history_index == history.size() - 1)
+			if(history_index == static_cast<int>(history.size() - 1))
 			{
 				history.push_back(cmd);
 				++history_index;
@@ -66,9 +66,9 @@ class Menu {
 		};
 		void redo() {
 			//Moves to the next command in history (if possible)
-			if(history_index < history.size())
+			if(history_index < static_cast<int>(history.size()))
 			{
-				++history_index
+				++history_index;
 			}
 			
 		};
