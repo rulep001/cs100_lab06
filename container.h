@@ -29,6 +29,7 @@ class Container {
 	virtual int size() = 0;
 };
 
+
 class ListContainer : public Container {
     protected:
         list<Base*> listcont;
