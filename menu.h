@@ -66,7 +66,7 @@ class Menu {
 		};
 		void redo() {
 			//Moves to the next command in history (if possible)
-			if(history_index < static_cast<int>(history.size()))
+			if(history_index < static_cast<int>(history.size() -1))
 			{
 				++history_index;
 			}
