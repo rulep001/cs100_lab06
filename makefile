@@ -12,4 +12,3 @@ $(EXEC): $(OBJECTS)
 
 clean:
 	rm -f $(EXEC) $(OBJECTS)
-

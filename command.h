@@ -18,23 +18,47 @@ class Command {
 };
 
 class OpCommand : public Command {
-	//OpCommand Code Here
+	public:
+		OpCommand() : Command() {}
+		OpCommand(int i) {
+			root = new Op(i);
+		}
 };
 
 class AddCommand : public Command {
-	//AddCommand Code Here
+	public:
+		AddCommand() : Command() {}
+		AddCommand(Command* c, int i) {
+			Base* b = new Op(i);
+			root = new Add(c->get_root(), b);
+		}
 };
 
 class SubCommand : public Command {
-	//SubCommand Code Here
+	public:
+		SubCommand() : Command() {}
+		SubCommand(Command* c, int i) {
+			Base* b = new Op(i);
+			root = new Sub(c->get_root(), b);
+		}
 };
 
 class MultCommand : public Command {
-	//MultCommand Code Here
+	public:
+		MultCommand() : Command() {}
+		MultCommand(Command* c, int i) {
+			Base* b = new Op(i);
+			root = new Mult(c->get_root(), b);
+		}
 };
 
 class SqrCommand : public Command {
-	//SqrCommand Code Here
+	public:
+		SqrCommand() : Command() {}
+		SqrCommand(Command* c, int i) {
+			Base* b = new Op(i);
+			root = new Sqr(c->get_root(), b);
+		}
 };
 
 #endif //__COMMAND_CLASS__

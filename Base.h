@@ -22,41 +22,41 @@ class Base {
 
 class Op : public Base {
     protected:
-	double num;
+	    double num;
     public:
-	Op() : num(0) { }
-	Op(double number) : num(number) { }
-	double evaluate() {
-	    return num;
-	}
+	    Op() : num(0) { }
+	    Op(double number) : num(number) { }
+	    double evaluate() {
+	        return num;
+    	}
 };
 
 class singleOp : public Op {
     protected:
-	Base *singleChild;
+	    Base *singleChild;
     public:
-	singleOp() : singleChild(0) { }
-	singleOp(Base *single) : singleChild(single) { }
+    	singleOp() : singleChild(0) { }
+    	singleOp(Base *single) : singleChild(single) { }
 };
 
 class doubleOp : public Op {
     protected:
-	Base *left;
-	Base *right;
+    	Base *left;
+    	Base *right;
     public:
-	doubleOp() : left(0), right(0) { }
-	doubleOp(Base *l, Base *r) : left(l), right(r) { }
+    	doubleOp() : left(0), right(0) { }
+	    doubleOp(Base *l, Base *r) : left(l), right(r) { }
 };
 
 // Composite
 
 class Add : public doubleOp {
     public:   
-        Add() : doubleOp() { } 
-        Add(Base *l, Base *r) : doubleOp(l, r)	{ }
-        double evaluate() {
-            return left->evaluate() + right->evaluate();
-        }
+            Add() : doubleOp() { } 
+            Add(Base *l, Base *r) : doubleOp(l, r)	{ }
+            double evaluate() {
+                return left->evaluate() + right->evaluate();
+            }
 };
 
 class Sub : public doubleOp {
@@ -70,11 +70,11 @@ class Sub : public doubleOp {
 
 class Mult : public doubleOp {
     public:
-	Mult() : doubleOp() { }
-	Mult(Base *l, Base *r) : doubleOp(l, r) { }
-	double evaluate() {
-	    return left->evaluate() * right->evaluate();
-	}
+    	Mult() : doubleOp() { }
+    	Mult(Base *l, Base *r) : doubleOp(l, r) { }
+    	double evaluate() {
+    	    return left->evaluate() * right->evaluate();
+    	}
 };
 
 class Div : public doubleOp {
