@@ -12,12 +12,13 @@ Since this lab relies on a completed composite pattern, you have been provided w
 
 You have also been provided with a main function in  calculator.cpp  that will deal with user input and output, and interface that user I/O with the menu class. This menu has the following commands:
 * Exit the Program
-..* Typing “exit” as a command will exit the program
+    * Typing “exit” as a command will exit the program
 * Undo a Command
-..* Typing “undo” will go back to the last command, and can be called until there are no more commands to undo
+    * Typing “undo” will go back to the last command, and can be called until there are no more commands to undo
 * Redo a Command
-..* Typing “redo” will go forward to the next command, and can be called until there are no more commands to redo ● Do a Calculation
-..* Do a running calculation. This calculation must start with a single number (ex: 3), and after a single number has been input should take an operator followed by a number (ex: + 10). Note that a space is required between the operator and the number.
+    * Typing “redo” will go forward to the next command, and can be called until there are no more commands to redo
+* Do a Calculation
+    * Do a running calculation. This calculation must start with a single number (ex: 3), and after a single number has been input should take an operator followed by a number (ex: + 10). Note that a space is required between the operator and the number.
 
 ## The Menu Class
 The menu class is used as an interface between user input and the commands that are created for keeping track of the calculation. It contains two internal members `vector<Command*> history`, which is used to hold all the commands that have been run, and `int history_index`, which is used to keep track of our position in history.
